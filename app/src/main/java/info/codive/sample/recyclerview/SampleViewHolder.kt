@@ -11,4 +11,12 @@ class SampleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val image: ImageView = view.findViewById(R.id.image)
     val message: TextView = view.findViewById(R.id.message)
     val button: Button = view.findViewById(R.id.button)
+
+    //Viewの透明度を設定
+    fun setAlpha(alpha: Float) {
+        image.alpha = alpha
+        title.alpha = alpha
+        message.alpha = alpha
+        button.alpha = alpha
+    }
 }

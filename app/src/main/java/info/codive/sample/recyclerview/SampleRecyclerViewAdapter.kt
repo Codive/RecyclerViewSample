@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
-class SampleRecyclerViewAdapter(private val itemList: List<Pair<String, String>>) :
+class SampleRecyclerViewAdapter(private val itemList: MutableList<Pair<String, String>>) :
     RecyclerView.Adapter<SampleViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SampleViewHolder {
@@ -30,4 +30,17 @@ class SampleRecyclerViewAdapter(private val itemList: List<Pair<String, String>>
     }
 
     override fun getItemCount(): Int = itemList.size
+
+    //アイテムを移動
+    fun moveItem(fromPosition: Int, toPosition: Int) {
+        val item = itemList.removeAt(fromPosition) //データをリストから削除
+        itemList.add(toPosition, item) //削除したデータを指定された位置に挿入
+        notifyItemMoved(fromPosition, toPosition) //Viewに反映
+    }
+
+    //アイテムを削除
+    fun removeItem(position: Int) {
+        itemList.removeAt(position) //データを削除
+        notifyItemRemoved(position) //Viewに反映
+    }
 }
