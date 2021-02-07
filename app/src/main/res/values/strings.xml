@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">RecyclerViewSample</string>
+
+    <string name="title">RecyclerViewSample</string>
+    <string name="title_active">ActiveMode</string>
 </resources>
