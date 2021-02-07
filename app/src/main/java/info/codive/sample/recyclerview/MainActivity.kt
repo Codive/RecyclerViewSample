@@ -11,17 +11,15 @@ import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var tracker: SelectionTracker<Long>
-    private lateinit var itemList: MutableList<Pair<String, String>>
+    private lateinit var itemList: MutableList<SampleData>
     private lateinit var adapter: SampleRecyclerViewAdapter
 
     private val actionModeCallback: SampleActionModeCallback by lazy {
-        SampleActionModeCallback(
-            tracker,
-            itemList
-        )
+        SampleActionModeCallback(tracker, itemList, adapter)
     }
 
-    val selectionObserver = object :SelectionTracker.SelectionObserver<Long>() {
+
+    private val selectionObserver = object : SelectionTracker.SelectionObserver<Long>() {
         override fun onSelectionChanged() {
             super.onSelectionChanged()
             when {
@@ -71,10 +69,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     // テストデータ作成
-    private fun createTestData(): MutableList<Pair<String, String>> {
-        val listItem = mutableListOf<Pair<String, String>>()
-        for (i in 1..100) {
-            listItem.add(Pair("Title$i", "Message$i"))
+    private fun createTestData(): MutableList<SampleData> {
+        val listItem = mutableListOf<SampleData>()
+        for (i in 1..10) {
+//            listItem.add(Pair("Title$i", "Message$i"))
+            listItem.add(SampleData(i.toLong(), "Title$i", "Message$i"))
         }
         return listItem
     }

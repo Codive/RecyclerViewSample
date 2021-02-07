@@ -7,7 +7,8 @@ import androidx.recyclerview.selection.SelectionTracker
 
 class SampleActionModeCallback(
     private val tracker: SelectionTracker<Long>,
-    private val itemList: MutableList<Pair<String, String>>
+    private val itemList: MutableList<SampleData>,
+    private val adapter: SampleRecyclerViewAdapter
 ) : ActionMode.Callback {
     var actionMode: ActionMode? = null
 
@@ -23,19 +24,18 @@ class SampleActionModeCallback(
 
     //ActionModeでのメニューボタン押下処理
     override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
             R.id.delete -> {
                 itemList.removeAll {
-                    tracker.selection.contains(
-                        it.first.replace(Regex("[^0-9]"), "").toLong()
-                    )
+                    tracker.selection.contains(it.id)
                 }
+                adapter.notifyDataSetChanged() //Adapterのデータも更新する
                 tracker.clearSelection()
                 actionMode?.finish()
-                return true
+                true
             }
             else -> {
-                return false
+                false
             }
         }
     }

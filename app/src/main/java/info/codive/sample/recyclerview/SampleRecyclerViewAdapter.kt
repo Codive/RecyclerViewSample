@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.RecyclerView
 
-class SampleRecyclerViewAdapter(private val itemList: MutableList<Pair<String, String>>) :
+class SampleRecyclerViewAdapter(private val itemList: MutableList<SampleData>) :
     RecyclerView.Adapter<SampleViewHolder>() {
     lateinit var tracker: SelectionTracker<Long>
 
@@ -32,16 +32,16 @@ class SampleRecyclerViewAdapter(private val itemList: MutableList<Pair<String, S
         val id = getItemId(position)
 
         holder.run {
-            title.text = itemList[position].first
-            message.text = itemList[position].second
+            title.text = itemList[position].title
+            message.text = itemList[position].message
             container.isActivated = tracker.isSelected(id)
         }
     }
 
     override fun getItemCount(): Int = itemList.size
 
+    //デフォルトでは固定値を返すので上書き
     override fun getItemId(position: Int): Long {
-        val itemId = (itemList[position].first as String).replace(Regex("[^0-9]"), "")
-        return itemId.toLong()
+        return itemList[position].id
     }
 }
