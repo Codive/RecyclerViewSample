@@ -3,10 +3,10 @@ package info.codive.sample.recyclerview
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 
-class SampleRecyclerViewAdapter(private val itemList: MutableList<Pair<String, String>>) :
-    RecyclerView.Adapter<SampleViewHolder>() {
+class SampleRecyclerViewAdapter() :
+    ListAdapter<SampleData, SampleViewHolder>(SampleItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SampleViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -24,23 +24,23 @@ class SampleRecyclerViewAdapter(private val itemList: MutableList<Pair<String, S
 
     override fun onBindViewHolder(holder: SampleViewHolder, position: Int) {
         holder.run {
-            title.text = itemList[position].first
-            message.text = itemList[position].second
+            title.text = getItem(position).title
+            message.text = getItem(position).message
         }
     }
 
-    override fun getItemCount(): Int = itemList.size
-
     //アイテムを移動
     fun moveItem(fromPosition: Int, toPosition: Int) {
-        val item = itemList.removeAt(fromPosition) //データをリストから削除
-        itemList.add(toPosition, item) //削除したデータを指定された位置に挿入
-        notifyItemMoved(fromPosition, toPosition) //Viewに反映
+        val newList = currentList.toMutableList() //Mutableなリストを作成
+        val item = newList.removeAt(fromPosition) //データをリストから削除
+        newList.add(toPosition, item) //削除したデータを指定された位置に挿入
+        submitList(newList) //データを更新
     }
 
     //アイテムを削除
     fun removeItem(position: Int) {
-        itemList.removeAt(position) //データを削除
-        notifyItemRemoved(position) //Viewに反映
+        val newList = currentList.toMutableList() //Mutableなリストを作成
+        newList.removeAt(position) //データを削除
+        submitList(newList) //データを更新
     }
 }

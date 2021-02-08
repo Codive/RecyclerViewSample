@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var adapter: SampleRecyclerViewAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -17,7 +19,9 @@ class MainActivity : AppCompatActivity() {
         val listItem = createTestData()
 
         val recyclerView = findViewById<RecyclerView>(R.id.sample_recycler_view)
-        recyclerView.adapter = SampleRecyclerViewAdapter(listItem.toMutableList())
+        adapter = SampleRecyclerViewAdapter()
+        adapter.submitList(listItem)
+        recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         val itemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL) //区切り線
         recyclerView.addItemDecoration(itemDecoration)
@@ -34,10 +38,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     // テストデータ作成
-    private fun createTestData(): List<Pair<String, String>> {
-        val listItem = mutableListOf<Pair<String, String>>()
-        for (i in 1..100) {
-            listItem.add(Pair("Title$i", "Message$i"))
+    private fun createTestData(): MutableList<SampleData> {
+        val listItem = mutableListOf<SampleData>()
+        for (i in 1..10) {
+            listItem.add(SampleData(i.toLong(), "Title$i", "Message$i"))
         }
         return listItem
     }
