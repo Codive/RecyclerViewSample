@@ -26,10 +26,11 @@ class SampleActionModeCallback(
     override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.delete -> {
+                //idが一致する全データを削除
                 itemList.removeAll {
                     tracker.selection.contains(it.id)
                 }
-                adapter.notifyDataSetChanged() //Adapterのデータも更新する
+                adapter.notifyDataSetChanged() //Adapterにデータの変更を通知
                 tracker.clearSelection()
                 actionMode?.finish()
                 true
@@ -43,7 +44,7 @@ class SampleActionModeCallback(
     override fun onDestroyActionMode(mode: ActionMode) {
         actionMode = null
 
-        // fixme:戻るボタンを押下するとonDestroyActionModeが実行される。ActionModeでは戻るボタンの名前がandroid.R.id.homeではなく、ハンドリング方法が不明なのでここで選択項目があれば選択解除している
+        // 戻るボタンを押下するとonDestroyActionModeが実行される。ActionModeでは戻るボタンの名前がandroid.R.id.homeではなく、ハンドリング方法が不明なのでここで選択項目があれば選択解除している
         if (tracker.hasSelection()) tracker.clearSelection()
     }
 }

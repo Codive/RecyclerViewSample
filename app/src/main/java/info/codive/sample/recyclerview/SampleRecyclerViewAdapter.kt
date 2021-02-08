@@ -3,11 +3,11 @@ package info.codive.sample.recyclerview
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.selection.SelectionTracker
-import androidx.recyclerview.widget.RecyclerView
 
-class SampleRecyclerViewAdapter(private val itemList: MutableList<SampleData>) :
-    RecyclerView.Adapter<SampleViewHolder>() {
+class SampleRecyclerViewAdapter() :
+    ListAdapter<SampleData, SampleViewHolder>(SampleItemDiffCallback()) {
     lateinit var tracker: SelectionTracker<Long>
 
     init {
@@ -32,16 +32,14 @@ class SampleRecyclerViewAdapter(private val itemList: MutableList<SampleData>) :
         val id = getItemId(position)
 
         holder.run {
-            title.text = itemList[position].title
-            message.text = itemList[position].message
+            title.text = getItem(position).title
+            message.text = getItem(position).message
             container.isActivated = tracker.isSelected(id)
         }
     }
 
-    override fun getItemCount(): Int = itemList.size
-
     //デフォルトでは固定値を返すので上書き
     override fun getItemId(position: Int): Long {
-        return itemList[position].id
+        return getItem(position).id
     }
 }

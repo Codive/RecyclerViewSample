@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         SampleActionModeCallback(tracker, itemList, adapter)
     }
 
-
     private val selectionObserver = object : SelectionTracker.SelectionObserver<Long>() {
         override fun onSelectionChanged() {
             super.onSelectionChanged()
@@ -43,7 +42,8 @@ class MainActivity : AppCompatActivity() {
         itemList = createTestData()
 
         val recyclerView = findViewById<RecyclerView>(R.id.sample_recycler_view)
-        adapter = SampleRecyclerViewAdapter(itemList)
+        adapter = SampleRecyclerViewAdapter()
+        adapter.submitList(itemList)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         //区切り線
@@ -72,7 +72,6 @@ class MainActivity : AppCompatActivity() {
     private fun createTestData(): MutableList<SampleData> {
         val listItem = mutableListOf<SampleData>()
         for (i in 1..10) {
-//            listItem.add(Pair("Title$i", "Message$i"))
             listItem.add(SampleData(i.toLong(), "Title$i", "Message$i"))
         }
         return listItem
