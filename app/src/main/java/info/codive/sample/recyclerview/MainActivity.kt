@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var adapter: SampleRecyclerViewAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -15,7 +17,9 @@ class MainActivity : AppCompatActivity() {
         val listItem = createTestData()
 
         val recyclerView = findViewById<RecyclerView>(R.id.sample_recycler_view)
-        recyclerView.adapter = SampleRecyclerViewAdapter(listItem)
+        adapter = SampleRecyclerViewAdapter()
+        adapter.submitList(listItem)
+        recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         //区切り線
         val itemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)

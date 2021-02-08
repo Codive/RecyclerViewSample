@@ -3,10 +3,11 @@ package info.codive.sample.recyclerview
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class SampleRecyclerViewAdapter(private val itemList: List<SampleData>) :
-    RecyclerView.Adapter<SampleViewHolder>() {
+class SampleRecyclerViewAdapter() :
+    ListAdapter<SampleData, SampleViewHolder>(SampleItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SampleViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -24,10 +25,8 @@ class SampleRecyclerViewAdapter(private val itemList: List<SampleData>) :
 
     override fun onBindViewHolder(holder: SampleViewHolder, position: Int) {
         holder.run {
-            title.text = itemList[position].title
-            message.text = itemList[position].message
+            title.text = getItem(position).title
+            message.text = getItem(position).message
         }
     }
-
-    override fun getItemCount(): Int = itemList.size
 }
