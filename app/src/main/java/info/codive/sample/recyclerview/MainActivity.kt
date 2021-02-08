@@ -11,11 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var tracker: SelectionTracker<Long>
-    private lateinit var itemList: MutableList<SampleData>
     private lateinit var adapter: SampleRecyclerViewAdapter
 
     private val actionModeCallback: SampleActionModeCallback by lazy {
-        SampleActionModeCallback(tracker, itemList, adapter)
+        SampleActionModeCallback(adapter)
     }
 
     private val selectionObserver = object : SelectionTracker.SelectionObserver<Long>() {
@@ -39,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //テストデータ作成
-        itemList = createTestData()
+        val itemList = createTestData()
 
         val recyclerView = findViewById<RecyclerView>(R.id.sample_recycler_view)
         adapter = SampleRecyclerViewAdapter()

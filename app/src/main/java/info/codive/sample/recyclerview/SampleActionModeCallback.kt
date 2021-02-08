@@ -6,8 +6,6 @@ import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.selection.SelectionTracker
 
 class SampleActionModeCallback(
-    private val tracker: SelectionTracker<Long>,
-    private val itemList: MutableList<SampleData>,
     private val adapter: SampleRecyclerViewAdapter
 ) : ActionMode.Callback {
     var actionMode: ActionMode? = null
@@ -24,14 +22,15 @@ class SampleActionModeCallback(
 
     //ActionModeでのメニューボタン押下処理
     override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
+        val newList = adapter.currentList.toMutableList() //MutableListを作成
         return when (item.itemId) {
             R.id.delete -> {
                 //idが一致する全データを削除
-                itemList.removeAll {
-                    tracker.selection.contains(it.id)
+                newList.removeAll {
+                    adapter.tracker.selection.contains(it.id)
                 }
-                adapter.notifyDataSetChanged() //Adapterにデータの変更を通知
-                tracker.clearSelection()
+                adapter.submitList(newList) //データ更新
+                adapter.tracker.clearSelection()
                 actionMode?.finish()
                 true
             }
@@ -45,6 +44,6 @@ class SampleActionModeCallback(
         actionMode = null
 
         // 戻るボタンを押下するとonDestroyActionModeが実行される。ActionModeでは戻るボタンの名前がandroid.R.id.homeではなく、ハンドリング方法が不明なのでここで選択項目があれば選択解除している
-        if (tracker.hasSelection()) tracker.clearSelection()
+        if (adapter.tracker.hasSelection()) adapter.tracker.clearSelection()
     }
 }
