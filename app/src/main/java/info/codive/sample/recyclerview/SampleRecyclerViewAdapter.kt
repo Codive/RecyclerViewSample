@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
-class SampleRecyclerViewAdapter(private val itemList: List<Pair<String, String>>) :
+class SampleRecyclerViewAdapter(private val itemList: List<SampleData>) :
     RecyclerView.Adapter<SampleViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SampleViewHolder {
@@ -24,8 +24,8 @@ class SampleRecyclerViewAdapter(private val itemList: List<Pair<String, String>>
 
     override fun onBindViewHolder(holder: SampleViewHolder, position: Int) {
         holder.run {
-            title.text = itemList[position].first
-            message.text = itemList[position].second
+            title.text = itemList[position].title
+            message.text = itemList[position].message
         }
     }
 

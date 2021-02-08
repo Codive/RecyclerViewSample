@@ -23,10 +23,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     // テストデータ作成
-    private fun createTestData(): List<Pair<String, String>> {
-        val listItem = mutableListOf<Pair<String, String>>()
-        for (i in 1..100) {
-            listItem.add(Pair("Title$i", "Message$i"))
+    private fun createTestData(): List<SampleData> {
+        val listItem = mutableListOf<SampleData>()
+        for (i in 1..10) {
+            listItem.add(SampleData(i.toLong(), "Title$i", "Message$i"))
         }
         return listItem
     }
