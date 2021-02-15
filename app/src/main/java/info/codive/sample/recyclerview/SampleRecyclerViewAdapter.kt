@@ -6,8 +6,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class SampleRecyclerViewAdapter() :
-    ListAdapter<SampleData, SampleViewHolder>(SampleItemDiffCallback()) {
+class SampleRecyclerViewAdapter(itemDiffCallback : SampleItemDiffCallback) :
+    ListAdapter<SampleData, SampleViewHolder>(itemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SampleViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

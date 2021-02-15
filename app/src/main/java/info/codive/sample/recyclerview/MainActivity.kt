@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         val listItem = createTestData()
 
         val recyclerView = findViewById<RecyclerView>(R.id.sample_recycler_view)
-        adapter = SampleRecyclerViewAdapter()
+        adapter = SampleRecyclerViewAdapter(SampleItemDiffCallback())
         adapter.submitList(listItem)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
