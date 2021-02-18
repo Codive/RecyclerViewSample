@@ -18,12 +18,7 @@ class SampleRepository(private val mDao: SampleTableDaoMock) {
     @WorkerThread
     suspend fun move(fromPosition: Int, toPosition: Int) {
         val sampleData = mDao.delete(fromPosition)
-        mDao.insert(toPosition, sampleData!!)
-    }
-
-    @WorkerThread
-    suspend fun update(sampleData: SampleData) {
-        mDao.update(sampleData)
+        mDao.insert(toPosition, sampleData)
     }
 
     @WorkerThread

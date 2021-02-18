@@ -22,14 +22,13 @@ class MainActivity : AppCompatActivity() {
         val itemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL) //区切り線
         recyclerView.addItemDecoration(itemDecoration)
 
-        /////////////////////////////////
         // ViewModel設定(LiveDataの監視)
         val sampleTableDao = SampleTableDaoMock()
         val repository = SampleRepository(sampleTableDao)
         val viewModelFactory = SampleViewModelFactory(repository)
         val viewModel = ViewModelProvider(this, viewModelFactory).get(SampleViewModel::class.java)
 
-        viewModel.sampleArray.observe(this) {
+        viewModel.sampleDataListLiveData.observe(this) {
             adapter.submitList(it)
         }
 
