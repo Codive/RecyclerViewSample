@@ -3,7 +3,7 @@ package info.codive.sample.recyclerview
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
-class SampleItemTouchHelperCallback(private val recyclerView: RecyclerView) :
+class SampleItemTouchHelperCallback(private val viewModel: SampleViewModel) :
     ItemTouchHelper.SimpleCallback(
         ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT
     ) {
@@ -13,7 +13,7 @@ class SampleItemTouchHelperCallback(private val recyclerView: RecyclerView) :
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
-        (recyclerView.adapter as SampleRecyclerViewAdapter).moveItem(
+        viewModel.moveItem(
             viewHolder.adapterPosition,
             target.adapterPosition
         )
@@ -21,7 +21,7 @@ class SampleItemTouchHelperCallback(private val recyclerView: RecyclerView) :
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        (recyclerView.adapter as SampleRecyclerViewAdapter).removeItem(viewHolder.adapterPosition)
+        viewModel.removeItem(viewHolder.adapterPosition)
     }
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {

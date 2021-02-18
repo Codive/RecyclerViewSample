@@ -28,19 +28,4 @@ class SampleRecyclerViewAdapter() :
             message.text = getItem(position).message
         }
     }
-
-    //アイテムを移動
-    fun moveItem(fromPosition: Int, toPosition: Int) {
-        val newList = currentList.toMutableList() //Mutableなリストを作成
-        val item = newList.removeAt(fromPosition) //データをリストから削除
-        newList.add(toPosition, item) //削除したデータを指定された位置に挿入
-        submitList(newList) //データを更新
-    }
-
-    //アイテムを削除
-    fun removeItem(position: Int) {
-        val newList = currentList.toMutableList() //Mutableなリストを作成
-        newList.removeAt(position) //データを削除
-        submitList(newList) //データを更新
-    }
 }
