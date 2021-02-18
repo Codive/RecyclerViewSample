@@ -2,6 +2,7 @@ package info.codive.sample.recyclerview
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,25 +14,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //テストデータ作成
-        val listItem = createTestData()
-
         val recyclerView = findViewById<RecyclerView>(R.id.sample_recycler_view)
         adapter = SampleRecyclerViewAdapter(SampleItemDiffCallback())
-        adapter.submitList(listItem)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         //区切り線
         val itemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         recyclerView.addItemDecoration(itemDecoration)
-    }
 
-    // テストデータ作成
-    private fun createTestData(): List<SampleData> {
-        val listItem = mutableListOf<SampleData>()
-        for (i in 1..10) {
-            listItem.add(SampleData(i.toLong(), "Title$i", "Message$i"))
+        // ViewModel設定(LiveDataの監視)
+        val sampleTableDao = SampleTableDaoMock()
+        val repository = SampleRepository(sampleTableDao)
+        val viewModelFactory = SampleViewModelFactory(repository)
+        val viewModel = ViewModelProvider(this, viewModelFactory).get(SampleViewModel::class.java)
+
+        viewModel.sampleDataListLiveData.observe(this) {
+            adapter.submitList(it)
         }
-        return listItem
     }
 }
